@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
 router.get("/vista", (req, res) => {
   res.render("tareasVista");
 });
-router.get("/tarea/modif", (req, res) => {
+router.get("/tarea", (req, res) => {
   res.render("modificar");
 });
 
