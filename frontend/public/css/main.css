@@ -19,8 +19,20 @@ body{
     background: #121212 !important;
 }
 .navbar a{
-    color: orangered ;
+    color: white ;
     &:hover{
-        color: red;
+        color: rgb(208, 208, 208);
+    }
+}
+
+.btn{
+    width: 100%;
+    background-color: orangered;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+        background-color: red;
     }
 }
