@@ -24,3 +24,19 @@
     color: #c4c4c4;
     font-size: 1rem;
 }
+.fecha_tarea{
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.fecha_tarea p{
+    font-size: 1rem;
+}
+
+.tarea_incompleta{
+    color: #ff5c5c;
+}
+.tarea_completa{
+    color: #cbff62;
+}
