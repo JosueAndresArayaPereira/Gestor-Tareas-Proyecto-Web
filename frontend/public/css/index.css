@@ -1,3 +1,8 @@
+body{
+    justify-content: center;
+    align-items: center;
+}
+
 h1{
     font-size: 2rem;
     font-weight: 500;
@@ -47,6 +52,7 @@ form a{
         color: red;
     }
 }
+
 @media screen and (max-width: 1024px){
     form{
         width: 80%;
