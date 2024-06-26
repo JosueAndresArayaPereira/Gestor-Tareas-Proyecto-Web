@@ -8,8 +8,12 @@ router.get("/", (req, res) => {
 router.get("/vista", (req, res) => {
   res.render("tareasVista");
 });
-router.get("/tarea", (req, res) => {
+router.get("/tareaModificar", (req, res) => {
   res.render("modificar");
+});
+
+router.get("/tareaAgregar", (req, res) => {
+  res.render("agregar");
 });
 
 router.get("/*", (req, res) => {

@@ -20,20 +20,17 @@
 
 .fechas_tarea{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     color: #c4c4c4;
     font-size: 1rem;
+    padding: 0;
+    margin-bottom: 1rem;
 }
-.fecha_tarea{
-    
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.fechas_tarea p{
+    color: #8b8b8b;
+    margin: 0;
+    padding: 0;
 }
-.fecha_tarea p{
-    font-size: 1rem;
-}
-
 .tarea_incompleta{
     color: #ff5c5c;
 }

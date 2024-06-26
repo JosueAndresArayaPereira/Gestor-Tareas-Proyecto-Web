@@ -44,7 +44,7 @@ CREATE TABLE `tareas` (
   `nombre_tarea` varchar(200) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_cierre` date NOT NULL,
-  `descripcion` varchar(100) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
   `estado` varchar(100) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

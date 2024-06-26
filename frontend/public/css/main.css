@@ -6,6 +6,7 @@
     box-sizing: border-box;
     color: white;
     font-size: 1.2rem;
+    scrollbar-width: none;
 }
 body{
     font-family: 'Poppins', sans-serif;
@@ -35,4 +36,53 @@ body{
     &:hover{
         background-color: red;
     }
+}
+
+
+form input,
+form textarea{
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background: #444;
+    color: white;
+    resize: none;
+    &:focus{
+        outline: none;
+        box-shadow: 0 0 5px orangered;
+    }
+
+}
+
+form button{
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background: orangered;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover{
+        background: red;
+        transform: scaleX(1.001) translateY(-2px);
+    }
+}
+form a{
+    cursor: pointer;
+    text-align: start;
+    color: orangered;
+    text-decoration: none;
+    &:hover{
+        color: red;
+    }
+}
+form{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #333;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
