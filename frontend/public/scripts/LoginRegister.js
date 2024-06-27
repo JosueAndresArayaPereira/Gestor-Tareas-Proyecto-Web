@@ -1,5 +1,8 @@
 let oculto = true;
 
+localStorage.removeItem("token");
+localStorage.removeItem("data_user");
+
 // Funcion que muestra u oculta el formulario de login y register
 function MostrarOcultarFormulario() {
   let loginForm = document.getElementById("formulario_login");
@@ -78,6 +81,7 @@ function Login() {
       response.json().then((data) => {
         // convertimos la respuesta a json y la guardamos en data
         localStorage.setItem("token", data.token); // guardamos el token en el localstorage
+        localStorage.setItem("data_user", correo); // guardamos el correo en el localstorage
         window.location.href = "/vista"; // redirigimos a la vista
       });
     } else {

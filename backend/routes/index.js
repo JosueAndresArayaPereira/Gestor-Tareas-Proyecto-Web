@@ -102,6 +102,8 @@ router.get("/usuario", authenticateToken, async (req, res) => {
 // Endpoint para agregar un comentario en contactanos
 router.post("/contactanos", async (req, res) => {
   const comentario = req.body;
+  let id_usuario = await obtenerIdUsuario(comentario.correo);
+  comentario.id_usuario = id_usuario;
   const result = await setContactanos(comentario);
   if (result) {
     res.status(201).send("Comentario agregado con éxito");
