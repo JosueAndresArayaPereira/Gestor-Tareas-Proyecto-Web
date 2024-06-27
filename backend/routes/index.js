@@ -16,6 +16,10 @@ router.get("/tareaAgregar", (req, res) => {
   res.render("agregar");
 });
 
+router.get("/contactanos", (req, res) => {
+  res.render("contactanos");
+});
+
 router.get("/*", (req, res) => {
   res.render("404");
 });

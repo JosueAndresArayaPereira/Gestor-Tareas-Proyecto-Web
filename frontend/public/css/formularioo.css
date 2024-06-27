@@ -12,3 +12,11 @@ select,option{
     padding: 0 10px;
     font-size: 16px;
 }
+
+@media screen and (max-width: 1024px){
+    form{
+        position: relative;
+        margin-top: 0;
+        width: 90%;
+    }
+}
