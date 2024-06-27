@@ -47,7 +47,7 @@ router.get("/contactanos", (req, res) => {
   res.render("contactanos");
 });
 
-// Endpoint para agregar un nuevo usuario
+// Endpoint para agregar un nuevo usuario ("registro")
 router.post("/usuario", async (req, res) => {
   const usuario = req.body;
   const result = await setUsuario(usuario);

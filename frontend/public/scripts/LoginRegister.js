@@ -22,3 +22,66 @@ document.querySelectorAll("#form_link").forEach((link) => {
     MostrarOcultarFormulario();
   });
 });
+
+function register() {
+  let nombre = document.getElementById("nombre_register").value;
+  let correo = document.getElementById("correo_register").value;
+  let contra = document.getElementById("contra_register").value;
+
+  fetch("/usuario", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ nombre, correo, contra }),
+  }).then((response) => {
+    if (response.status === 201) {
+      alert("Usuario creado con éxito");
+      vaciarTodasLasEntradas();
+      MostrarOcultarFormulario();
+    } else {
+      alert("Error al crear el usuario");
+    }
+  });
+}
+
+function vaciarTodasLasEntradas() {
+  let inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+}
+
+function Login() {
+  let correo = document.getElementById("correo_login").value;
+  let contra = document.getElementById("contra_login").value;
+
+  fetch("/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ correo, contra }),
+  }).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        localStorage.setItem("token", data.token);
+        window.location.href = "/vista";
+      });
+    } else {
+      alert("Usuario o contraseña incorrectos");
+    }
+  });
+}
+
+document.getElementById("formulario_login").addEventListener("submit", (e) => {
+  e.preventDefault();
+  Login();
+});
+
+document
+  .getElementById("formulario_register")
+  .addEventListener("submit", (e) => {
+    e.preventDefault();
+    register();
+  });
