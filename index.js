@@ -1,11 +1,13 @@
 import express from "express";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import bodyParser from "body-parser";
 import indexRouter from "./backend/routes/index.js";
 
 const app = express(); //dando las propiedades de express a app
 
-app.use(express.json()); //diciendo que se usara json como formato de datos
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const __dirname = dirname(fileURLToPath(import.meta.url)); //dando la ruta del directorio actual
 
