@@ -46,10 +46,31 @@ export const obtenerUsuarioYVerificarContra = async (correo, plainPassword) => {
       const hashedPassword = usuario.contra;
       const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
       if (isMatch) {
-        return { nombre: usuario.nombre, correo: usuario.correo };
+        return {
+          nombre: usuario.nombre,
+          correo: usuario.correo,
+          id_usuario: usuario.id_usuario,
+        };
       } else {
         return false; // Contraseña incorrecta
       }
+    } else {
+      return false; // Usuario no encontrado
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+//funcion para obtener la id de un usuario por correo
+export const obtenerIdUsuario = async (correo) => {
+  try {
+    const query = "SELECT id_usuario FROM usuario WHERE correo = ?";
+    const [rows] = await pool.query(query, [correo]);
+    if (rows.length > 0) {
+      const usuario = rows[0];
+      return usuario.id_usuario;
     } else {
       return false; // Usuario no encontrado
     }
@@ -82,6 +103,10 @@ export const getTareas = async (id_usuario) => {
   try {
     const query = "SELECT * FROM tareas WHERE id_usuario = ?";
     const [result] = await pool.query(query, [id_usuario]);
+    result.map((tarea) => {
+      //->map() es una función que se utiliza para transformar los elementos de un array
+      tarea.id_usuario = undefined; // Eliminar el id_usuario de la respuesta
+    });
     return result;
   } catch (error) {
     console.log(error);

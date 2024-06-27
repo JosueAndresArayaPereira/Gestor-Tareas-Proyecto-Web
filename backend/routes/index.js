@@ -6,6 +6,7 @@ import {
   setContactanos,
   getTareas,
   setTarea,
+  obtenerIdUsuario,
 } from "../db/bdLogica.js";
 
 const router = Router();
@@ -52,9 +53,9 @@ router.get("/usuarios", async (req, res) => {
 });
 
 // Endpoint para obtener un usuario por correo
-router.get("/usuario/:correo:contra", async (req, res) => {
-  const correo = req.params.correo;
-  const contra = req.params.contra;
+router.get("/usuario", async (req, res) => {
+  const correo = req.body.correo;
+  const contra = req.body.contra;
   const result = await obtenerUsuarioYVerificarContra(correo, contra);
   if (result) {
     res.status(200).json(result);
@@ -75,8 +76,9 @@ router.post("/contactanos", async (req, res) => {
 });
 
 // Endpoint para obtener las tareas de un usuario por ID de usuario
-router.get("/tareas/:id_usuario", async (req, res) => {
-  const id_usuario = req.params.id_usuario;
+router.get("/tareas", async (req, res) => {
+  const correo = req.body.correo;
+  const id_usuario = await obtenerIdUsuario(correo);
   const result = await getTareas(id_usuario);
   if (result) {
     res.status(200).json(result);
@@ -88,6 +90,8 @@ router.get("/tareas/:id_usuario", async (req, res) => {
 // Endpoint para agregar una nueva tarea
 router.post("/tarea", async (req, res) => {
   const tarea = req.body;
+  const id_usuario = await obtenerIdUsuario(tarea.correo);
+  tarea.id_usuario = id_usuario;
   const result = await setTarea(tarea);
   if (result) {
     res.status(201).send("Tarea agregada con éxito");
