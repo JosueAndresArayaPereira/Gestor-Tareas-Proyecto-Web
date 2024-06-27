@@ -58,6 +58,11 @@ router.post("/usuario", async (req, res) => {
   }
 });
 
+//endpoint para verificar si mi token es valido
+router.get("/verificar", authenticateToken, (req, res) => {
+  res.status(200).send("Token valido");
+});
+
 // Endpoint para iniciar sesión y generar un token JWT
 router.post("/login", async (req, res) => {
   const { correo, contra } = req.body;
