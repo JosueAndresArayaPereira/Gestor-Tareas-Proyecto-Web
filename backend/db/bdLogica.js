@@ -116,6 +116,7 @@ export const getTareas = async (id_usuario) => {
 
 // Función para insertar una nueva tarea en la tabla tareas
 export const setTarea = async (tarea) => {
+  console.table(tarea);
   try {
     const query =
       "INSERT INTO tareas (nombre_tarea, fecha_ESTIMADA, descripcion, estado, id_usuario) VALUES (?,?,?,?,?)";
