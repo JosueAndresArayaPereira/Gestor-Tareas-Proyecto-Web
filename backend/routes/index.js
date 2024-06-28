@@ -113,7 +113,7 @@ router.post("/contactanos", async (req, res) => {
 });
 
 // Endpoint para obtener las tareas de un usuario por ID de usuario (protegido)
-router.get("/tareas", authenticateToken, async (req, res) => {
+router.post("/tareas", authenticateToken, async (req, res) => {
   const correo = req.body.correo;
   const id_usuario = await obtenerIdUsuario(correo);
   const result = await getTareas(id_usuario);

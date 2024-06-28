@@ -1,7 +1,7 @@
 .mostrar_tareas{
-    margin-inline: auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: minmax(200px, auto-fill);
     gap: 1rem;
     justify-content: center;
     padding: 1rem;
@@ -12,10 +12,23 @@
     background: #333;
     border-radius: .3rem;
 }
-.descripcion_tarea{
+.tarea h2{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Número de líneas visibles */
+    -webkit-box-orient: vertical;/* Dirección del texto */
+}
+.descripcion_tarea {
+    height: 150px;
     color: #c4c4c4;
     font-size: 1.2rem;
     margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas visibles */
+    -webkit-box-orient: vertical;/* Dirección del texto */
 }
 
 .fechas_tarea{
