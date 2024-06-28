@@ -84,10 +84,11 @@ export const obtenerIdUsuario = async (correo) => {
 export const setContactanos = async (comentario) => {
   try {
     const query =
-      "INSERT INTO contactanos (id_usuario, asunto, tipo, fecha_creacion) VALUES (?,?,?,?)";
+      "INSERT INTO contactanos (id_usuario, asunto, descripcion, tipo, fecha_creacion) VALUES (?,?,?,?,?)";
     const [result] = await pool.query(query, [
       comentario.id_usuario,
       comentario.asunto,
+      comentario.descripcion,
       comentario.tipo,
       comentario.fecha_creacion,
     ]);
