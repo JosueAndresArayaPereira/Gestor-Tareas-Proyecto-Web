@@ -44,9 +44,16 @@
     margin: 0;
     padding: 0;
 }
-.tarea_incompleta{
+
+
+
+
+.tarea_pendiente{
     color: #ff5c5c;
 }
-.tarea_completa{
-    color: #cbff62;
+.tarea_completando{
+    color: #f5ff62;
+}
+.tarea_completada{
+    color: #5cff5c;
 }

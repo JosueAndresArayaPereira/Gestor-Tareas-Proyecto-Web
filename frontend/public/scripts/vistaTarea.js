@@ -33,6 +33,7 @@ async function obtenerTodasLasTareas() {
         `;
       });
       document.querySelector(".mostrar_tareas").innerHTML = tareas_html;
+      ponerEventoBotones();
     } else {
       alert("Error al obtener las tareas");
     }
@@ -40,6 +41,16 @@ async function obtenerTodasLasTareas() {
     console.error("Error:", error);
     alert("Error al obtener las tareas");
   }
+}
+
+function ponerEventoBotones() {
+  let botones = document.querySelectorAll(".btn");
+  botones.forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const id = boton.getAttribute("id"); // Obtener el id del atributo del botón
+      window.location.href = `/editarTarea?id=${id}`; // Redireccionar a la página de editar tarea
+    });
+  });
 }
 
 obtenerTodasLasTareas();

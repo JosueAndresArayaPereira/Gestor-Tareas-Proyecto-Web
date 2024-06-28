@@ -5,7 +5,7 @@ document.getElementById("agregar_form").addEventListener("submit", (e) => {
   let descripcion = document.getElementById("descripcion_tarea").value; // se toma el valor del input con el id descripcion_tarea
   let correo = localStorage.getItem("data_user");
   let fecha_ESTIMADA = document.getElementById("fecha_estimada").value;
-  let estado = "incompleta";
+  let estado = "Pendiente";
   fetch("/tarea", {
     // se hace una peticion al servidor en la ruta /tarea
     method: "POST", // indicamos que el metodo es POST

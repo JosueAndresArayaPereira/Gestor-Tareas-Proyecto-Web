@@ -8,6 +8,9 @@ import {
   getTareas,
   setTarea,
   obtenerIdUsuario,
+  getTarea,
+  modificarTarea,
+  deleteTarea,
 } from "../db/bdLogica.js";
 import jwt from "jsonwebtoken"; // Importar jsonwebtoken para manejar JWT
 const router = Router();
@@ -35,7 +38,7 @@ router.get("/vista", (req, res) => {
   res.render("tareasVista");
 });
 
-router.get("/tareaModificar", (req, res) => {
+router.get("/editarTarea", (req, res) => {
   res.render("modificar");
 });
 
@@ -134,6 +137,39 @@ router.post("/tarea", authenticateToken, async (req, res) => {
     res.status(201).send("Tarea agregada con éxito");
   } else {
     res.status(500).send("Error al agregar la tarea");
+  }
+});
+
+//endpoint para editar una tarea
+router.put("/tarea", authenticateToken, async (req, res) => {
+  const tarea = req.body;
+  const result = await modificarTarea(tarea);
+  if (result) {
+    res.status(200).send("Tarea editada con éxito");
+  } else {
+    res.status(500).send("Error al editar la tarea");
+  }
+});
+
+//endpoint para eliminar una tarea
+router.delete("/tarea", authenticateToken, async (req, res) => {
+  const id_tarea = req.body.id_tarea;
+  const result = await deleteTarea(id_tarea);
+  if (result) {
+    res.status(200).send("Tarea eliminada con éxito");
+  } else {
+    res.status(500).send("Error al eliminar la tarea");
+  }
+});
+
+//endpoint para obtener una tarea por id
+router.get("/tarea", authenticateToken, async (req, res) => {
+  const id_tarea = req.query.id_tarea; // Obtener el id_tarea del query parameter
+  const result = await getTarea(id_tarea);
+  if (result) {
+    res.status(200).json(result);
+  } else {
+    res.status(404).send("Tarea no encontrada");
   }
 });
 

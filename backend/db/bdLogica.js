@@ -102,12 +102,55 @@ export const setContactanos = async (comentario) => {
 // Función para obtener todas las tareas de un usuario
 export const getTareas = async (id_usuario) => {
   try {
-    const query = "SELECT * FROM tareas WHERE id_usuario = ?";
+    const query =
+      "SELECT * FROM tareas WHERE id_usuario = ? ORDER BY id_tarea DESC";
     const [result] = await pool.query(query, [id_usuario]);
     result.map((tarea) => {
       //->map() es una función que se utiliza para transformar los elementos de un array
       tarea.id_usuario = undefined; // Eliminar el id_usuario de la respuesta
     });
+    return result;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const getTarea = async (id_tarea) => {
+  try {
+    const query = "SELECT * FROM tareas WHERE id_tarea = ?";
+    const [result] = await pool.query(query, [id_tarea]);
+    return result[0];
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+//funcion para modificar una tarea
+export const modificarTarea = async (tarea) => {
+  try {
+    const query =
+      "UPDATE tareas SET nombre_tarea = ?, descripcion = ?, fecha_ESTIMADA = ?, estado = ? WHERE id_tarea = ?";
+    const [result] = await pool.query(query, [
+      tarea.nombre_tarea,
+      tarea.descripcion,
+      tarea.fecha_ESTIMADA,
+      tarea.estado,
+      tarea.id_tarea,
+    ]);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+// Función para eliminar una tarea de la tabla tareas
+export const deleteTarea = async (id_tarea) => {
+  try {
+    const query = "DELETE FROM tareas WHERE id_tarea = ?";
+    const [result] = await pool.query(query, [id_tarea]);
     return result;
   } catch (error) {
     console.log(error);
