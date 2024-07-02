@@ -13,6 +13,8 @@ import {
   deleteTarea,
 } from "../db/bdLogica.js";
 import jwt from "jsonwebtoken"; // Importar jsonwebtoken para manejar JWT
+import { mailer } from "../correo.js";
+
 const router = Router();
 const secretKey = process.env.SECRET_KEY; // Clave secreta para firmar los tokens JWT
 
@@ -50,12 +52,21 @@ router.get("/contactanos", (req, res) => {
   res.render("contactanos");
 });
 
+let servicioCorreo = new mailer();
+
 // Endpoint para agregar un nuevo usuario ("registro")
 router.post("/usuario", async (req, res) => {
   const usuario = req.body;
   const result = await setUsuario(usuario);
   if (result) {
     res.status(201).send("Usuario creado con éxito");
+    // sendEmail(usuario.correo, "Registro exitoso", usuario.nombre);
+    servicioCorreo.sendEmail(
+      usuario.correo,
+      "Registro exitoso",
+      usuario.nombre,
+      "registro"
+    );
   } else {
     res.status(500).send("Error al crear el usuario");
   }
@@ -110,6 +121,12 @@ router.post("/contactanos", async (req, res) => {
   const result = await setContactanos(comentario);
   if (result) {
     res.status(201).send("Comentario agregado con éxito");
+    servicioCorreo.sendEmail(
+      comentario.correo,
+      "Comentario recibido",
+      "Usuario/a",
+      "contactanos"
+    );
   } else {
     res.status(500).send("Error al agregar el comentario");
   }

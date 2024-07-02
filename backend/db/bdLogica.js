@@ -2,19 +2,21 @@ import { pool } from "./bd.js";
 import bcrypt from "bcrypt";
 import "dotenv/config";
 
-const saltRounds = parseInt(process.env.SALT_ROUNDS); // Convertir el número de rondas de sal a entero
+const saltRounds = parseInt(process.env.SALT_ROUNDS); // Número de rondas para el proceso de hash
 
 // Función para insertar un nuevo usuario en la tabla usuario
 export const setUsuario = async (usuario) => {
   try {
-    // Hashear la contraseña antes de almacenarla
+    // aplicar encriptacion de la contraseña mediante proceso de hash
     const hashedPassword = await bcrypt.hash(usuario.contra, saltRounds);
 
-    const query = "INSERT INTO usuario (nombre, correo, contra) VALUES (?,?,?)";
+    const query =
+      "INSERT INTO usuario (nombre, correo, contra, tipo_usuario) VALUES (?,?,?,?)";
     const [result] = await pool.query(query, [
       usuario.nombre,
       usuario.correo,
       hashedPassword,
+      "normal",
     ]);
     return result;
   } catch (error) {
@@ -84,13 +86,14 @@ export const obtenerIdUsuario = async (correo) => {
 export const setContactanos = async (comentario) => {
   try {
     const query =
-      "INSERT INTO contactanos (id_usuario, asunto, descripcion, tipo, fecha_creacion) VALUES (?,?,?,?,?)";
+      "INSERT INTO contactanos (id_usuario, asunto, descripcion, tipo, fecha_creacion, atendido) VALUES (?,?,?,?,?,?)";
     const [result] = await pool.query(query, [
       comentario.id_usuario,
       comentario.asunto,
       comentario.descripcion,
       comentario.tipo,
       comentario.fecha_creacion,
+      "false",
     ]);
     return result;
   } catch (error) {
