@@ -1,6 +1,6 @@
-import { pool } from "./bd.js";
-import bcrypt from "bcrypt";
-import "dotenv/config";
+import { pool } from "./bd.js"; // se importa la función pool que se encarga de crear la conexión a la base de datos
+import bcrypt from "bcrypt"; // se importa la libreria bcrypt que se encarga de encriptar la contraseña
+import "dotenv/config"; // se importa la libreria dotenv que se encarga de leer las variables de entorno
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS); // Número de rondas para el proceso de hash
 
@@ -12,6 +12,9 @@ export const setUsuario = async (usuario) => {
 
     const query =
       "INSERT INTO usuario (nombre, correo, contra, tipo_usuario) VALUES (?,?,?,?)";
+    // se entregan los datos por separado para evitar una inyeccion de sql
+
+    //result esta entre [] para que se pueda desestructurar el resultado
     const [result] = await pool.query(query, [
       usuario.nombre,
       usuario.correo,
@@ -112,6 +115,7 @@ export const getTareas = async (id_usuario) => {
       //->map() es una función que se utiliza para transformar los elementos de un array
       tarea.id_usuario = undefined; // Eliminar el id_usuario de la respuesta
     });
+
     return result;
   } catch (error) {
     console.log(error);
@@ -135,6 +139,7 @@ export const modificarTarea = async (tarea) => {
   try {
     const query =
       "UPDATE tareas SET nombre_tarea = ?, descripcion = ?, fecha_ESTIMADA = ?, estado = ? WHERE id_tarea = ?";
+
     const [result] = await pool.query(query, [
       tarea.nombre_tarea,
       tarea.descripcion,
@@ -142,6 +147,7 @@ export const modificarTarea = async (tarea) => {
       tarea.estado,
       tarea.id_tarea,
     ]);
+
     return result;
   } catch (error) {
     console.log(error);
@@ -163,7 +169,7 @@ export const deleteTarea = async (id_tarea) => {
 
 // Función para insertar una nueva tarea en la tabla tareas
 export const setTarea = async (tarea) => {
-  console.table(tarea);
+  console.table(tarea); // lo muestra como una tabla el objeto tarea
   try {
     const query =
       "INSERT INTO tareas (nombre_tarea, fecha_ESTIMADA, descripcion, estado, id_usuario) VALUES (?,?,?,?,?)";

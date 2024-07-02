@@ -12,6 +12,7 @@ import {
   modificarTarea,
   deleteTarea,
 } from "../db/bdLogica.js";
+
 import jwt from "jsonwebtoken"; // Importar jsonwebtoken para manejar JWT
 import { mailer } from "../correo.js";
 
@@ -23,11 +24,11 @@ const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1]; // Obtener el token de la cabecera de autorización
 
-  if (token == null) return res.sendStatus(401); // No hay token
+  if (token == null) return res.sendStatus(401); // 401 significa que no se ha autenticado
 
   jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.sendStatus(403); // Token no válido
-    req.user = user;
+    if (err) return res.sendStatus(403); // 403 significa que no se tiene permiso para acceder al recurso
+    req.user = user; // Guardar el usuario en el request
     next(); // el nex sirve para que continue con la siguiente funcion !profe lo puse yo esto para entenderlo¡
   });
 };
@@ -59,8 +60,7 @@ router.post("/usuario", async (req, res) => {
   const usuario = req.body;
   const result = await setUsuario(usuario);
   if (result) {
-    res.status(201).send("Usuario creado con éxito");
-    // sendEmail(usuario.correo, "Registro exitoso", usuario.nombre);
+    res.status(201).send("Usuario creado con éxito"); // que significa el 201? -> significa que se creo un recurso
     servicioCorreo.sendEmail(
       usuario.correo,
       "Registro exitoso",
@@ -83,11 +83,13 @@ router.post("/login", async (req, res) => {
   const result = await obtenerUsuarioYVerificarContra(correo, contra);
   if (result) {
     const token = jwt.sign({ correo: result.correo }, secretKey, {
+      // se le pasa el correo y la clave secreta como parametros
+      //se indica el tiempo de expiracion del token
       expiresIn: "1h",
     }); // Generar token JWT
     res.json({ token });
   } else {
-    res.status(404).send("Usuario o contraseña incorrectos");
+    res.status(404).send("Usuario o contraseña incorrectos"); // 404 significa que no se encontro el recurso
   }
 });
 
